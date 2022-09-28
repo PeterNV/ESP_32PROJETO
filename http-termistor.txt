@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Temperatura</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"content="width=device-width,initial-scale=1.0">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js">
+
+</script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js">
+
+</script>
+<style>
+#fundo{
+    height: 55px;
+    width: 55px; 
+    border: 1px solid transparent;   
+    position: relative;
+    left: 45px;
+}
+#fundoTwo{
+    height: 55px;
+    width: 55px; 
+    border: 1px solid transparent;   
+    position: relative;
+    left: 45px;
+ 
+}
+#bar{
+    height: 15px;
+    width: 80px;
+    background-image: -webkit-linear-gradient(180deg,red,red);
+    background-repeat: repeat-y;
+    background-size:     contain;
+    margin: auto; 
+    border: 1px solid black;
+    rotate: -90deg;
+ 
+    
+}
+#circle{
+    height: 25px;
+    width: 25px;
+    background-image: -webkit-linear-gradient(0deg,red,red);
+    background-repeat: repeat-x;
+    border: 1px solid black;
+    margin: auto;
+    border-radius: 50%;
+    position: relative;
+    right: -14px;
+    bottom: -4px;
+    border-top-color: transparent;
+}
+#gota{
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
+    rotate: -45deg;
+    background-image: -webkit-linear-gradient(90deg,aqua,aqua);
+    background-size:     contain;
+    background-repeat: repeat-y;
+    position: relative;
+    overflow: hidden;
+    left: 15px;
+
+}
+</style>
+<script type="application/javascript">
+
+function atualizar(){
+
+   //$("#Temperatura").html('...');
+  
+  $.ajax({
+       type: "POST",
+       contentType:"text/plain",
+       url: window.location+"obter/temperatura",
+       success:function(dados){
+      $("#Temperatura").html(dados);
+      var x =  document.getElementById("Temperatura").innerHTML;
+ 
+       document.getElementById("bar").style.backgroundSize = x+"px";
+        window.setTimeout(atualizar,100);
+       },
+       erro:function(erro){
+        console.log("Erro:"+erro);
+       }
+    });
+        $.ajax({
+       type: "POST",
+       contentType:"text/plain",
+       url: window.location+"obter/umidade",
+       success:function(dados){
+      $("#Umidade").html(dados);
+      var y =  document.getElementById("Umidade").innerHTML;
+ 
+       document.getElementById("gota").style.backgroundSize = y+"%";
+        window.setTimeout(atualizar,100);
+       },
+       erro:function(erro){
+        console.log("Erro:"+erro);
+       }
+    });
+}
+$(document).ready(function(){
+    atualizar();
+});
+ 
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="jumbotron">
+
+<h1>Temperatura e umidade</h1>
+
+</div>
+
+
+    <div id="fundo">
+    <div id="bar">
+    </div><br>
+    <div id="circle"></div>  
+    </div><br>
+    <p id="demo"></p>
+    <span id="Temperatura" ></span>°C
+
+    <br><br>
+    <div id="fundoTwo">
+    <div id="gota">      
+    </div>
+    </div><br>
+    <span id="Umidade" ></span>%
+
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "author": "Pedro Vila Nova",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": { "env": "micropython-20220618-v1.19.1" }
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -97.18,
+      "left": -300.6,
+      "attrs": { "temperature": "80" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "dht1:VCC", "esp:VIN", "red", [ "v0" ] ],
+    [ "dht1:SDA", "esp:D27", "green", [ "v0" ] ]
+  ]
+}
